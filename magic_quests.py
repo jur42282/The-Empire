@@ -1,4 +1,5 @@
 import random
+import json
 
 level = 0
 denied_magic = False
@@ -45,6 +46,15 @@ class Quest:
 def test():
     print("hahahaha")
 
+def decision(**kwargs):
+    def effect():
+      print("JSJSJS")
+    # stats = json.load(open("quest.json","r",encoding='utf-8'))
+    # for key, value in kwargs.items():
+    #     stats[key] += value
+    # json.dump(stats,open("quest.json","w",encoding='utf-8'),indent=4)
+    return effect
+
 class Answer:
     def __init__(self, description, epilogue, function):
         self.description = f'\nEmpress Gažarová:\033[0m "{description}"\n'
@@ -76,13 +86,13 @@ research = {
           Answer(
             "You have my blessing. May your Magic Tower become a pillar of wisdom and strength for the realm.",
             "With the Empress's approval, the Magic Tower took shape. Mages gathered, knowledge flourished, and the aspiring mage's dream became reality—a beacon of magic within the empire.",
-            test,
+            decision(),
           ),
         "no":
           Answer(
             "I cannot allow this. Magic is a force both wondrous and dangerous—I will not take such a risk within my lands.",
             "Without the Empress's blessing, the mage left in search of a new land. Though the Magic Tower would not rise in the empire, his vision found a home elsewhere, and his name became legend beyond its borders.",
-            test,
+            decision(),
           ),
       }],
     ),
@@ -107,7 +117,28 @@ research = {
       }],
     ),
   ],
-  "lvl1": [],
+  "lvl1": [
+    Quest(
+      "harvest_effectivity",
+      f"desc",
+      f'{mage_ranks[1]} {mage_name}: "dialog text"',
+      [{
+        "answer_desc": "desc of harvesting answer",
+        "yes":
+          Answer(
+            "dialog when approved",
+            "desc when approved",
+            test,
+          ),
+        "no":
+          Answer(
+            "dialog when disapproved",
+            "desc when disapproved",
+            test,
+          ),
+      }],
+    ),
+  ],
   "lvl2": [],
   "lvl3": [],
   "lvl4": [],
