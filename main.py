@@ -1,15 +1,15 @@
 # Importy #
 import random as rd
-import quest_selector as qs
+# import quest_selector as qs
+import json
 ###########
 
-# class Atribute:
-#     def __init__(self, name, value):
-#         self.name = name
-#         self.value = value * rd.randint(10, 15)
+def load_json(file):
+    with open(file) as f:
+        data = json.load(f)
+    return data
 
-#     def __str__(self):
-#         return f"{self.name}: {self.value}"
+print(load_json("quests.json"))
     
 kingdom1 = "Elven Kingdom"
 kingdom2 = "Dwarfs Kingdom"
