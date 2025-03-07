@@ -18,7 +18,7 @@ class Quest: # Záladní class, neměnit
     def __str__(self):
         return f"{self.name}\n{self.description}"
     
-# zakládání questu
+
 Scammer = Quest("Scammer", f"Your Majesty, I beg you, to send thy guards to the city market. A vile thief plagues the market, and none dare stop him! Justice is needed. ", [
     {"answer_desc" : "Will you send guards?", "They have greater matters to attend." : attribute_change(happiness=-5), "Justice shall be served...": attribute_change(happiness=5)}
 ])
