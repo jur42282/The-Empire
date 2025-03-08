@@ -25,8 +25,14 @@ class Quest:
         self.options = options
         self.__completed = False
 
+    def formatCost(self):
+        if len(self.options[0]["cost"]) > 0:
+          return ", ".join(f"{key}: {value}" for key, value in self.options[0]["cost"].items())
+        else:
+          return "Nothing"
+
     def __str__(self):
-        return f"{self.prologue}\n\n{self.description}\n\n{self.options[0]['answer_desc']}"
+        return f"{self.prologue}\n\n{self.description}\n\n{self.options[0]['answer_desc']}\n\nThis action will cost you: {self.formatCost()}"
     
     def __call__(self):
         global denied_magic
@@ -48,7 +54,7 @@ def test():
 
 def decision(**kwargs):
     def effect():
-      print("JSJSJS")
+      print("proměnné změněny:)")
     # stats = json.load(open("quest.json","r",encoding='utf-8'))
     # for key, value in kwargs.items():
     #     stats[key] += value
@@ -61,11 +67,9 @@ class Answer:
         self.epilogue = epilogue
         self.function = function
     
-    def __str__(self):
-        return self.description
     def __call__(self):
-        print(self.description)
         self.function()
+        print(self.description)
         print(self.epilogue)
         input()
         return ""
@@ -82,6 +86,7 @@ research = {
       f'{mage_ranks[0]} {mage_name}: "Your Majesty, I humbly seek your permission to construct a Magic Tower within your lands—a sanctuary where mages from across the realm may gather, study, and advance the arcane arts. With your blessing, we shall create a beacon of knowledge and power that will serve the kingdom for generations to come. Will you grant us this honor?"',
       [{
         "answer_desc": "Will you grant permission for the Magic Tower to be built within your lands?",
+        "cost": {},
         "yes":
           Answer(
             "You have my blessing. May your Magic Tower become a pillar of wisdom and strength for the realm.",
@@ -102,6 +107,7 @@ research = {
       f'{mage_ranks[0]} {mage_name}: "Your Majesty, the Magic Tower rises, but not as swiftly as I had hoped. Our resources are stretched thin, and without aid, its completion may take years. I humbly ask for your support—your generosity would ensure that this beacon of magic stands strong within your kingdom far sooner. Will you grant us this assistance?"',
       [{
         "answer_desc": "Will you provide financial support to aid in the swift completion of the Magic Tower?",
+        "cost": {'Gold': 200, 'Iron': 10},
         "yes":
           Answer(
             "Very well. The kingdom shall invest in your vision—see to it that this tower becomes a source of wisdom and strength for my people.",
@@ -124,6 +130,7 @@ research = {
       f'{mage_ranks[1]} {mage_name}: "dialog text"',
       [{
         "answer_desc": "desc of harvesting answer",
+        "cost": {},
         "yes":
           Answer(
             "dialog when approved",
@@ -158,7 +165,7 @@ events = {
 }
 
 print(magic())
-print("------------------------------------------------------"*2)
+print("-------"*16)
 print(magic())
 # Quest(
 #   "",
@@ -166,6 +173,7 @@ print(magic())
 #   f'{mage_ranks[0]} {mage_name}: ""',
 #   [{
 #     "answer_desc": "",
+#     "cost": {},
 #     "yes":
 #       Answer(
 #         "",
