@@ -1,7 +1,7 @@
 {
     "items":[
     {"wheat": 0,
-    "coal": 10,
+    "coal": 100,
     "wood": 100,
     "stone": 100}]
 }
