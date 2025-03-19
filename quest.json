@@ -1,13 +1,17 @@
-{"stats": {
-    "army": 0,
-    "diplomacy1": 0,
-    "diplomacy2": 0,
-    "money": 0,
-    "happiness": 0,
-    "population": 0,
-    "magic": 0
-},
-"quest_queue" :{
-    
-}
+{
+    "stats": {
+        "army": 0,
+        "diplomacy1": 0,
+        "diplomacy2": 0,
+        "money": 0,
+        "happiness": 0,
+        "population": 0,
+        "magic": 0,
+        "day": 1
+    },
+    "quest_queue": {
+        "1": "army_quests.funkce(argument=5)",
+        "2": "army_quests.pppp()",
+        "3": "army_quests.pppp()"
+    }
 }

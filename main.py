@@ -9,7 +9,7 @@ def load_json(file):
         data = json.load(f)
     return data
 
-print(load_json("quests.json"))
+print(load_json("quest.json"))
     
 kingdom1 = "Elven Kingdom"
 kingdom2 = "Dwarfs Kingdom"
@@ -36,13 +36,13 @@ kingdom2 = "Dwarfs Kingdom"
 day = 1
 while True:
     print(f"Day: {day}")
-    print(army)
-    print(happiness)
-    print(money)
-    print(population)
-    print(diplomacy1)
-    print(diplomacy2)
-    print(magic)
-    print(f"Current quest: {qs.random_quest()}")
+    # print(army)
+    # print(happiness)
+    # print(money)
+    # print(population)
+    # print(diplomacy1)
+    # print(diplomacy2)
+    # print(magic)
+    # print(f"Current quest: {qs.random_quest()}")
     input()
     day += 1
