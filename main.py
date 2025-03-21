@@ -1,48 +1,52 @@
 # Importy #
 import random as rd
-# import quest_selector as qs
+import quest_selector as qs
 import json
 ###########
 
-def load_json(file):
-    with open(file) as f:
+def get_stat(stat): #stat - string název statu
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
         data = json.load(f)
-    return data
+    return data["stats"][stat]
 
-print(load_json("quest.json"))
+def change_stat(stat, value): #stat - string název statu, value - hodnota změny (číslo)
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
     
-kingdom1 = "Elven Kingdom"
-kingdom2 = "Dwarfs Kingdom"
+    data["stats"][stat] += value
 
-# army = Atribute("Army", 1)
-# happiness = Atribute("Population Happiness", 2)
-# money = Atribute("Gold", 10)
-# population = Atribute("Population", 100)
-# diplomacy1 = Atribute(kingdom1, 1)
-# diplomacy2 = Atribute(kingdom2, 1)
-# magic = Atribute("Magic", 0)
+    #zapíše to zpátky do souboru
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
-# print(army)
-# print(happiness)
-# print(money)
-# print(population)
-# print(diplomacy1)
-# print(diplomacy2)
-# print(magic)
+def set_stat(stat, value):
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    
+    data["stats"][stat] = value
 
+    #zapíše to zpátky do souboru
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
+set_stat("army", rd.randint(50,150))
+set_stat("money", rd.randint(5000,10000))
+set_stat("population", rd.randint(100,150))
+set_stat("diplomacy1", 50)
+set_stat("diplomacy2", 50)
+set_stat("happiness", 50)
+set_stat("magic", 0)
+set_stat("day", 0)
 
 # Main Loop
-day = 1
-while True:
-    print(f"Day: {day}")
-    # print(army)
-    # print(happiness)
-    # print(money)
-    # print(population)
-    # print(diplomacy1)
-    # print(diplomacy2)
-    # print(magic)
-    # print(f"Current quest: {qs.random_quest()}")
+game_running = True
+
+while game_running:
+    change_stat("day", 1)
+    for key, value in json.load(open("data.json", "r", encoding="utf-8"))["stats"].items():
+        print(f"{key.capitalize()}: {value}")
+    qs.choose_quest()
     input()
-    day += 1

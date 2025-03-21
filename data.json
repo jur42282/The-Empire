@@ -1,0 +1,20 @@
+{
+    "stats": {
+        "day": 42,
+        "army": 145,
+        "diplomacy1": 50,
+        "diplomacy2": 50,
+        "money": 5105,
+        "happiness": 50,
+        "population": 113,
+        "magic": 0
+    },
+    "kingdoms": {
+        "kingdom1": "Elven Kingdom",
+        "kingdom2": "Dwarfs Kingdom"
+    },
+    "quest_queue": {
+        "2": "army_quests.pppp()",
+        "5": "army_quests.pppp()"
+    }
+}

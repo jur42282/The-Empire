@@ -1,15 +1,23 @@
 from random import choice
 import json
 import army_quests
+import magic_quests
+# import diplomacie?
+# import finance?
 
-quest_queue = { # Questy, které mají dopad později v čase 
-# příklad  "10": "example_quest" # Quest "example_quest" se spustí až na 10. den
-}
+def get_stat(stat): #stat - string název statu
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["stats"][stat]
 
-with open("quest.json", "r", encoding="utf-8") as f: 
-    data = json.load(f)
+def choose_quest():
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    current_day = get_stat("day")
+    if str(current_day) in data["quest_queue"].keys():
+        func = data["quest_queue"][str(current_day)]
+        return eval(func)
+    return choice(quest_categories)()
 
-def random_quest():
-    return choice(quests)
-
-quests = ["fsdfsfd", "sdfsgd", "dhsc", "ffgsd"]
+quest_categories = [magic_quests.magic, army_quests.ddddd]

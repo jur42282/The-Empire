@@ -6,8 +6,8 @@ import json
 
 
 def add_to_queue(day, quest): #day číslo, quest je soubor.funkce (například army_quests.attacked(True))
-    #načte soubor quest.json (neměnit)
-    with open("quest.json", "r", encoding="utf-8") as f: 
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
         data = json.load(f)
     day += data["stats"]["day"]
     #zjistí, jestli je daný den již obsazený
@@ -18,21 +18,17 @@ def add_to_queue(day, quest): #day číslo, quest je soubor.funkce (například 
     data["quest_queue"][str(day)] = quest
 
     #zapíše to zpátky do souboru
-    with open("quest.json", "w", encoding="utf-8") as f:
+    with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 
 
 
 
-
-
-
-add_to_queue(2, "army_quests.pppp()")
-
-
 def pppp():
     print("pppp")
+def ddddd():
+    print("ddddd")
 
 
 

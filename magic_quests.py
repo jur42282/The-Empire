@@ -112,13 +112,13 @@ research = {
           Answer(
             "Very well. The kingdom shall invest in your vision—see to it that this tower becomes a source of wisdom and strength for my people.",
             "With the Empress's aid, the Magic Tower rose swiftly. Mages filled its halls, and in gratitude, the mage swore loyalty to the empire, ensuring magic's lasting place in its future.",
-            test,
+            decision(),
           ),
         "no":
           Answer(
             "I have already granted you my permission; I will not grant you my gold. If your tower is meant to stand, let it rise by your own means.",
             "Lacking imperial support, the mage sought other patrons. Though progress was slow, his determination never wavered. In time, the Magic Tower stood—not by royal decree, but by sheer will.",
-            test,
+            decision(),
           ),
       }],
     ),
@@ -164,9 +164,9 @@ events = {
     "large": [],
 }
 
-print(magic())
-print("-------"*16)
-print(magic())
+# print(magic())
+# print("-------"*16)
+# print(magic())
 # Quest(
 #   "",
 #   f"",
