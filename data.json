@@ -16,5 +16,11 @@
     "quest_queue": {
         "2": "army_quests.pppp()",
         "5": "army_quests.pppp()"
+    },
+    "inventory": {
+        "wheat": 0,
+        "coal": 100,
+        "wood": 100,
+        "stone": 100
     }
 }
