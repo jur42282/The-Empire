@@ -16,6 +16,30 @@ def magic():
             while choiced.is_complete():
                 choiced = random.choice(research["lvl" + str(level)])
             return choiced()
+        
+def get_inventory(): #vrátí inventář (slovník)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["inventory"]
+def change_resource(resource, value): #resource - string název věci v inventáři, value - hodnota změny (číslo)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    data["inventory"][resource] += value
+    if data["inventory"][resource] < 0:
+        raise ValueError("Hodnota materiálu šla do mínusu. Oprav si to pls.")
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+def get_stat(stat): #stat - string název statu
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["stats"][stat]
+def change_stat(stat, value): #stat - string název statu, value - hodnota změny (číslo)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    data["stats"][stat] += value
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
 class Quest:
     def __init__(self, id:str, prologue:str, description:str, options:list):
@@ -39,7 +63,6 @@ class Quest:
         print(self, end=" ")
         user_input = input("\033[1m[Y/N]: ").lower()
         if user_input == "y":
-            self.__completed = True
             return self.options[0]["yes"]()
         else:
             if research["lvl0"][0] == self:
@@ -48,13 +71,38 @@ class Quest:
     
     def is_complete(self):
         return self.__completed
+    def completed(self):
+        self.__completed = True
 
 def test():
     print("hahahaha")
 
-def decision(**kwargs):
+def everything_is_ok(kwargs):
+    everything_is_okay = True
+    inventory = get_inventory()
+    for item, value in kwargs.items():
+        if item == "gold":
+            if get_stat("money") - value < 0:
+                print(f"You don't have enough {item} ({- (get_stat("money") - value)} missing).")
+                everything_is_okay = False
+        elif inventory[item] - value < 0:
+            print(f"You don't have enough {item} ({- (inventory[item] - value)} missing).")
+            everything_is_okay = False
+    return everything_is_okay
+    
+def decision(quest,**kwargs):
     def effect():
-      print("proměnné změněny:)")
+        if everything_is_ok(kwargs):
+            quest.completed() # this is wrong!!!!!!!!!
+            for item, value in kwargs.items():
+                if item == "gold":
+                    change_stat("money", -value)
+                else:
+                    change_resource(item, -value)
+        else:
+            print("Quest was automatically denied.")
+
+        print("proměnné změněny:)")
     # stats = json.load(open("quest.json","r",encoding='utf-8'))
     # for key, value in kwargs.items():
     #     stats[key] += value
@@ -90,13 +138,13 @@ research = {
           Answer(
             "You have my blessing. May your Magic Tower become a pillar of wisdom and strength for the realm.",
             "With the Empress's approval, the Magic Tower took shape. Mages gathered, knowledge flourished, and the aspiring mage's dream became reality—a beacon of magic within the empire.",
-            decision(),
+            decision("tower_permission"),
           ),
         "no":
           Answer(
             "I cannot allow this. Magic is a force both wondrous and dangerous—I will not take such a risk within my lands.",
             "Without the Empress's blessing, the mage left in search of a new land. Though the Magic Tower would not rise in the empire, his vision found a home elsewhere, and his name became legend beyond its borders.",
-            decision(),
+            decision("tower_permission"),
           ),
       }],
     ),

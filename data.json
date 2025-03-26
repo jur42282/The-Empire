@@ -1,12 +1,12 @@
 {
     "stats": {
-        "day": 6,
-        "army": 64,
+        "day": 4,
+        "army": 146,
         "diplomacy1": 50,
         "diplomacy2": 50,
-        "money": 9608,
+        "money": 5084,
         "happiness": 50,
-        "population": 118,
+        "population": 119,
         "magic": 0
     },
     "kingdoms": {
@@ -21,6 +21,7 @@
         "wheat": 0,
         "coal": 100,
         "wood": 100,
-        "stone": 100
+        "stone": 100,
+        "iron": 0
     }
 }

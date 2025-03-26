@@ -4,6 +4,9 @@ import quest_selector as qs
 import json
 ###########
 
+
+#  GLOBÁLNÍ FUNKCE
+# -----------------
 def get_stat(stat): #stat - string název statu
     #načte soubor data.json (neměnit)
     with open("data.json", "r", encoding="utf-8") as f: 
@@ -11,24 +14,35 @@ def get_stat(stat): #stat - string název statu
     return data["stats"][stat]
 
 def change_stat(stat, value): #stat - string název statu, value - hodnota změny (číslo)
-    #načte soubor data.json (neměnit)
     with open("data.json", "r", encoding="utf-8") as f: 
         data = json.load(f)
-    
     data["stats"][stat] += value
-
-    #zapíše to zpátky do souboru
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 def set_stat(stat, value):
-    #načte soubor data.json (neměnit)
     with open("data.json", "r", encoding="utf-8") as f: 
         data = json.load(f)
-    
     data["stats"][stat] = value
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
-    #zapíše to zpátky do souboru
+def get_inventory(): #vrátí inventář (slovník)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["inventory"]
+
+def get_resource(resource): #resource - string název věci v inventáři
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["inventory"][resource]
+
+def change_resource(resource, value): #resource - string název věci v inventáři, value - hodnota změny (číslo)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    data["inventory"][resource] += value
+    if data["inventory"][resource] < 0:
+        raise ValueError("Hodnota materiálu šla do mínusu. Oprav si to pls.")
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
