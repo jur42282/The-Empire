@@ -2,7 +2,7 @@ from random import choice
 import json
 import army_quests
 import magic_quests
-# import diplomacie?
+import domestic_diplomacy
 # import finance?
 
 def get_stat(stat): #stat - string název statu
@@ -20,4 +20,4 @@ def choose_quest():
         return eval(func)
     return choice(quest_categories)()
 
-quest_categories = [magic_quests.magic, army_quests.ddddd]
+quest_categories = [magic_quests.magic, army_quests.ddddd, domestic_diplomacy.diplomacy]
