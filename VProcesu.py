@@ -1,4 +1,3 @@
-
 import random as rd
 import source as src
 
@@ -124,12 +123,12 @@ def wheat1_yes():
     if wheat >= 100:
         wheat -= 100
         money += 500
-        print("Dokončil jsi obchod. Prodal jsi 100 obilí za 500 goldů.")
+        print("You made a deal. You sold a 100 pt of wheat for 500 gold.")
     else:
-        print("Nemáš dostatek obilí.")
+        print("You dont have enough amount of wheat.")
 
 def wheat1_no():
-    print("Odmítl jsi obchodníka a on pokračuje dál.")
+    print("You rejected the offer and the trader continued on his way.")
 
 
 def execute_yes():
@@ -141,17 +140,17 @@ def execute_yes():
                 happiness += 6
             else:
                 happiness = 100
-            print("Uspořádal jsi veřejnou popravu a uspokojil jsi lid. Stála tě 200 goldů a obyvatelé jsou o 6% více spokojeni.")
+            print("You have arranged the execution and satisfied a lot of people. It cost you 200 gold and population happines increased by 6 %.")
         else:
-            ("Nemáš ve svém království koho popravit.")
+            ("You dont have anyone to execute.")
     else:
-        print("Nemáš dostatek goldů.")
+        print("You dont have enough gold")
 def execute_no():
     if happiness >= 6:
         happiness -= 6
     else:
         happiness = 0
-    print("Odmítl jsi uspořádat popravu a lapka půjde do žaláře. Obyvatelé jsou o 6 % méně spokojeni.")
+    print("You declined an execution and the bandit goes to jail. Population happiness decreased by 6 %.")
 
 quests = {
     "common": [
@@ -159,7 +158,6 @@ quests = {
         Quest("Take care of the field!", "The local villagers have long complained about the lack of fertile land and the ever-growing needs of the city. Now is the time to act! The local ruler has entrusted you with an important task—building a new field that will provide enough food for the inhabitants and trade caravans.", [{"answer_desc" : "Build a field and claim resources every day! Will you do it?","yes": field_yes() , "no": field_no()}]),
         Quest("New Houses!", "The city is growing, and with it, the need for new homes for incoming settlers, traders, and craftsmen. The local ruler has entrusted you with an important task—to build new dwellings and ensure that the new inhabitants have a place to rest their heads!", [{"answer_desc" : "Build more houses for citizens. Do you agree?","yes": build_yes() , "no": build_no()}]),
         Quest("Increase the population!", "The city is growing, and with it comes the need to secure its future. The local ruler has entrusted you with an important task—to build a new maternity hospital that would support higher birth rates and ensure the continuation of the lineage for future generations. Creating such a facility is crucial for the long-term growth of the city's population and securing a workforce for various trades.", [{"answer_desc" : "Build a Maternity hospital and increase the amount of citizens. Will you do that?","yes": baby_yes() , "no": baby_no()}]),
-        Quest("Přišla ti nabídka od obchodníka", "Přijel obchodník z dalekého království a chce uzavřít obchod.", [{"answer_desc" : "Přijel obchodník z jiného království a chce odkoupit 100ks obilí.","yes": wheat1_yes() , "no": wheat1_no()}]),
-        Quest("Veřejná poprava", "Lapka byl chycen a nyní čeká na svůj rozsudek. Potěš své obyvatele a uspořádej veřejnou popravu.", [{"answer_desc" : "Uspořádej popravu lapky z tvého království","yes": execute_yes() , "no": execute_no()}])
+        Quest("You got an offer from treader!", "A merchant from a distant kingdom has arrived in the city, accompanied by a large caravan. He claims that his land is suffering from poor harvests and famine, and he is seeking a reliable supplier of grain. He offers a generous sum of gold in exchange.", [{"answer_desc" : "The dealer offers you a trade, 100 pt of wheat for a 500 gold.","yes": wheat1_yes() , "no": wheat1_no()}]),
+        Quest("Public execution!", "After weeks of robberies and attacks on travelers, the feared bandit has finally been captured! He is now imprisoned in the city dungeon, awaiting his sentence. The townspeople cry out for justice—his crimes deserve punishment, and what better warning for other criminals than a public execution?", [{"answer_desc" : "Will you arrange the execution of the bandit from your kingdom and satisfy your people?","yes": execute_yes() , "no": execute_no()}])
     ]}
-
