@@ -71,7 +71,6 @@ class Answer:
         self.function()
         print(self.description)
         print(self.epilogue)
-        input()
         return ""
     
 

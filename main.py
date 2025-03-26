@@ -48,5 +48,10 @@ while game_running:
     change_stat("day", 1)
     for key, value in json.load(open("data.json", "r", encoding="utf-8"))["stats"].items():
         print(f"{key.capitalize()}: {value}")
-    qs.choose_quest()
-    input()
+    if get_stat("population") == 0:
+        game_running = False
+        print("You lost.")
+    else:
+        print("")
+        qs.choose_quest()
+        input()
