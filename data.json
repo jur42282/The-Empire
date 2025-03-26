@@ -21,6 +21,7 @@
         "wheat": 0,
         "coal": 100,
         "wood": 100,
-        "stone": 100
+        "stone": 100,
+        "iron": 0
     }
 }
