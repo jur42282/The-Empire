@@ -27,6 +27,11 @@ def set_stat(stat, value):
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
+def get_inventory(): #vrátí inventář (slovník)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["inventory"]
+
 def get_resource(resource): #resource - string název věci v inventáři
     with open("data.json", "r", encoding="utf-8") as f: 
         data = json.load(f)
