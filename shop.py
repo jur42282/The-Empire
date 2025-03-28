@@ -70,6 +70,9 @@ class ShopManager():
                 print(f"You have selected {item.name} for {item.price} golds!")
                 print("Do you want to buy this item?")
 
+            else:
+                print("Please, enter a number! (exit - to leave the shop)")
+                continue
             #opatřit inputy aby necrashovalo
             while True:
                 global final_choice_shop
