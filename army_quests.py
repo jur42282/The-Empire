@@ -103,7 +103,23 @@ Scammer = Quest(
     [lambda: change_stat("happiness", -5), lambda: change_stat("happiness", 5)]
 )
 
+Blackmailer = Quest(
+    "Blackmailer",
+    "On my way to the forest I came across a troll. He said I must either pay him or he will be evil. I need soldiers to fight.",
+    ["Yes, send 5 armed soldiers to fight, some of them might survive","No, pay him and run away"],
+    [lambda: change_stat("army", -3), lambda: change_stat("money", -60)]
+)
+
+Recruitment = Quest(
+    "Recruitment",
+    "There will be a recruitment of new soldiers, but the training and tests will not be cheap! \nEither you pay and we will get 18 new and fresh guys, or we will save money but our army will be the same",
+    ["Yes, do the recruiting, new guys are good for us","No, our army is good, let's save money"],
+    [lambda: change_stat("army", 18), change_stat("money", -120),
+     lambda: change_stat("money", 0)]
+)
+
 """
+
 PressureWest = Quest("Pressure West", f"Your Majesty, the western border is under pressure. The {m.kingdom1} are attacking our villages. We need to send reinforcements.", [
     {"answer_desc" : "Will you send reinforcements?", "We need to protect our kingdom." : attribute_change(army=-5), "We can trust them, they are definitely just training ." : attribute_change(army=5)}
 ])
@@ -116,9 +132,17 @@ quests = {
     Scammer
   ],
   "uncommon": [
-    Quest()
+    Recruitment
+  ],
+  "common": [
+    Blackmailer
   ],
 }
 """
 
-print(Scammer())
+<<<<<<< HEAD
+print(Recruitment())
+=======
+if __name__ == "__main__":
+    print(Scammer())
+>>>>>>> 3d37fadfa87bf44f3c8eec60d662daa95d3366b4
