@@ -5,6 +5,14 @@ level = 0
 denied_magic = False
 
 def magic():
+    global level
+    
+    new_level = True
+    for quest in research["lvl" + str(level)]:
+        if not quest.is_complete():
+            new_level = False
+            break
+    level += new_level
     if not denied_magic:
         if level == 0:
             for quest in research["lvl0"]:
@@ -183,8 +191,8 @@ research = {
   ],
   "lvl1": [
     Quest(
-      "harvest_effectivity",
-      f"desc",
+      "initial_research",
+      f"desc_initial_research",
       f'{mage_ranks[1]} {mage_name}: "dialog text"',
       [{
         "answer_desc": "desc of harvesting answer",
