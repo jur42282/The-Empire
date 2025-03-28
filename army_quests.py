@@ -102,13 +102,13 @@ Scammer = Quest(
     ["Yes, justice shall be served...", "No, they have greater matters to attend."],
     [lambda: change_stat("happiness", -5), lambda: change_stat("happiness", 5)]
 )
+"""
 
 PressureWest = Quest("Pressure West", f"Your Majesty, the western border is under pressure. The {m.kingdom1} are attacking our villages. We need to send reinforcements.", [
     {"answer_desc" : "Will you send reinforcements?", "We need to protect our kingdom." : attribute_change(army=-5), "We can trust them, they are definitely just training ." : attribute_change(army=5)}
 ])
 # upravit na cvičení atd
 
-"""
 
 # Storování questů template
 quests = {
