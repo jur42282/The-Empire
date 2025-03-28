@@ -119,6 +119,7 @@ Recruitment = Quest(
 )
 
 """
+
 PressureWest = Quest("Pressure West", f"Your Majesty, the western border is under pressure. The {m.kingdom1} are attacking our villages. We need to send reinforcements.", [
     {"answer_desc" : "Will you send reinforcements?", "We need to protect our kingdom." : attribute_change(army=-5), "We can trust them, they are definitely just training ." : attribute_change(army=5)}
 ])
@@ -139,4 +140,9 @@ quests = {
 }
 """
 
+<<<<<<< HEAD
 print(Recruitment())
+=======
+if __name__ == "__main__":
+    print(Scammer())
+>>>>>>> 3d37fadfa87bf44f3c8eec60d662daa95d3366b4

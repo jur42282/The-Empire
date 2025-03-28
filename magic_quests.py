@@ -5,6 +5,14 @@ level = 0
 denied_magic = False
 
 def magic():
+    global level
+    
+    new_level = True
+    for quest in research["lvl" + str(level)]:
+        if not quest.is_complete():
+            new_level = False
+            break
+    level += new_level
     if not denied_magic:
         if level == 0:
             for quest in research["lvl0"]:
@@ -16,6 +24,30 @@ def magic():
             while choiced.is_complete():
                 choiced = random.choice(research["lvl" + str(level)])
             return choiced()
+        
+def get_inventory(): #vrátí inventář (slovník)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["inventory"]
+def change_resource(resource, value): #resource - string název věci v inventáři, value - hodnota změny (číslo)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    data["inventory"][resource] += value
+    if data["inventory"][resource] < 0:
+        raise ValueError("Hodnota materiálu šla do mínusu. Oprav si to pls.")
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+def get_stat(stat): #stat - string název statu
+    #načte soubor data.json (neměnit)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    return data["stats"][stat]
+def change_stat(stat, value): #stat - string název statu, value - hodnota změny (číslo)
+    with open("data.json", "r", encoding="utf-8") as f: 
+        data = json.load(f)
+    data["stats"][stat] += value
+    with open("data.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
 class Quest:
     def __init__(self, id:str, prologue:str, description:str, options:list):
@@ -39,7 +71,6 @@ class Quest:
         print(self, end=" ")
         user_input = input("\033[1m[Y/N]: ").lower()
         if user_input == "y":
-            self.__completed = True
             return self.options[0]["yes"]()
         else:
             if research["lvl0"][0] == self:
@@ -48,17 +79,53 @@ class Quest:
     
     def is_complete(self):
         return self.__completed
+    def completed(self):
+        self.__completed = True
 
 def test():
     print("hahahaha")
 
-def decision(**kwargs):
+def everything_is_ok(kwargs):
+    everything_is_okay = True
+    inventory = get_inventory()
+    for item, value in kwargs.items():
+        if item == "gold":
+            if get_stat("money") - value < 0:
+                print(f"You don't have enough: {item.capitalize()} ({- (get_stat("money") - value)} missing).")
+                everything_is_okay = False
+        elif inventory[item] - value < 0:
+            print(f"You don't have enough: {item.capitalize()} ({- (inventory[item] - value)} missing).")
+            everything_is_okay = False
+    return everything_is_okay
+    
+def decision(quest_id, boolean,**kwargs):
     def effect():
-      print("proměnné změněny:)")
-    # stats = json.load(open("quest.json","r",encoding='utf-8'))
-    # for key, value in kwargs.items():
-    #     stats[key] += value
-    # json.dump(stats,open("quest.json","w",encoding='utf-8'),indent=4)
+        def find_quest(quest_id):
+            for research_lvl in research.values():
+                for quest in research_lvl:
+                    if quest.id == quest_id:
+                        return quest
+            raise ValueError("Quest not found.")
+        
+        quest = find_quest(quest_id)
+        if not boolean:
+            return True
+        elif kwargs:
+            if everything_is_ok(kwargs):
+                quest.completed()
+                for item, value in kwargs.items():
+                    if item == "gold":
+                        change_stat("money", -value)
+                    else:
+                        change_resource(item, -value)
+                return True
+            else:
+                print("Quest was automatically denied.\033[0m")
+                return False
+        else:
+            quest.completed()
+            return True
+
     return effect
 
 class Answer:
@@ -68,9 +135,9 @@ class Answer:
         self.function = function
     
     def __call__(self):
-        self.function()
-        print(self.description)
-        print(self.epilogue)
+        if self.function():
+            print(self.description)
+            print(self.epilogue)
         return ""
     
 
@@ -90,13 +157,13 @@ research = {
           Answer(
             "You have my blessing. May your Magic Tower become a pillar of wisdom and strength for the realm.",
             "With the Empress's approval, the Magic Tower took shape. Mages gathered, knowledge flourished, and the aspiring mage's dream became reality—a beacon of magic within the empire.",
-            decision(),
+            decision("tower_permission", True),
           ),
         "no":
           Answer(
             "I cannot allow this. Magic is a force both wondrous and dangerous—I will not take such a risk within my lands.",
             "Without the Empress's blessing, the mage left in search of a new land. Though the Magic Tower would not rise in the empire, his vision found a home elsewhere, and his name became legend beyond its borders.",
-            decision(),
+            decision("tower_permission", False),
           ),
       }],
     ),
@@ -111,21 +178,21 @@ research = {
           Answer(
             "Very well. The kingdom shall invest in your vision—see to it that this tower becomes a source of wisdom and strength for my people.",
             "With the Empress's aid, the Magic Tower rose swiftly. Mages filled its halls, and in gratitude, the mage swore loyalty to the empire, ensuring magic's lasting place in its future.",
-            decision(),
+            decision("tower_construction", True, gold=200, iron=10),
           ),
         "no":
           Answer(
             "I have already granted you my permission; I will not grant you my gold. If your tower is meant to stand, let it rise by your own means.",
             "Lacking imperial support, the mage sought other patrons. Though progress was slow, his determination never wavered. In time, the Magic Tower stood—not by royal decree, but by sheer will.",
-            decision(),
+            decision("tower_construction", False),
           ),
       }],
     ),
   ],
   "lvl1": [
     Quest(
-      "harvest_effectivity",
-      f"desc",
+      "initial_research",
+      f"desc_initial_research",
       f'{mage_ranks[1]} {mage_name}: "dialog text"',
       [{
         "answer_desc": "desc of harvesting answer",
