@@ -140,9 +140,5 @@ quests = {
 }
 """
 
-<<<<<<< HEAD
-print(Recruitment())
-=======
 if __name__ == "__main__":
     print(Scammer())
->>>>>>> 3d37fadfa87bf44f3c8eec60d662daa95d3366b4
